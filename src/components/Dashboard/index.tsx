@@ -1,14 +1,17 @@
-import { useState } from "react";
+// import { useContext, useEffect, useState } from "react";
+import { useTask } from "../../hooks/useTasks";
 import { Container } from "./style";
+
+
 
 export function Dashboard() {
 
-    const [isActive, setIsActive] = useState(Boolean)
-
-    function handleClickActive(event: any){
-        setIsActive(event.target.checked)
+    const { tasks, changeComplete } = useTask()
+    
+    function handleChangeComplete(id:number, complete:boolean){
+        changeComplete(id, complete)
     }
-    console.log(isActive);
+    console.log(tasks);
     
 
     return(
@@ -18,34 +21,43 @@ export function Dashboard() {
                     <tr>
                         <th>Concluída</th>
                         <th>Titulo</th>
-                        <th>Sobre a Task</th>
+                        <th>Sobre  Task</th>
                         <th>Data</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className={isActive ? 'complete' : ''}>
-                        <td>
-                            <input 
-                                type="checkbox" 
-                                onClick={handleClickActive}
-                            />
-                        </td>
-                        <td>Estudar</td>
-                        <td>Historia, fisica e quimica</td>
-                        <td>14/03/2002</td>
-                    </tr>
-                    <tr className={isActive ? 'complete' : ''}>
-                        <td>
-                            <input 
-                                type="checkbox"
-                                onClick={handleClickActive}
-                            />
-                        </td>
-                        <td>Estudar</td>
-                        <td>Historia, fisica e quimica</td>
-                        <td>14/03/2002</td>
-                    </tr>
-                    
+                    {tasks.map((task)=>{
+                            return(
+                                <tr 
+                                    key={task.id}
+                                    className={task.complete ? 'complete': ''}
+                                >
+                                    <td>
+                                        {
+                                            task.complete?
+                                            <input 
+                                            type="checkbox" 
+                                            checked
+                                            onClick={(e)=>{
+                                                handleChangeComplete(task.id, e.currentTarget.checked)
+                                            }}
+                                            />:
+                                            <input 
+                                            type="checkbox" 
+                                            onClick={(e)=>{
+                                                handleChangeComplete(task.id, e.currentTarget.checked)
+                                            }}
+                                            />
+                                        }
+                                    </td>
+                                    <td>{task.title}</td>
+                                    <td>{task.description}</td>
+                                    <td>{new Intl.DateTimeFormat('pt-br').format(
+                                    new Date(task.date))}</td>
+                                </tr>
+                            )
+                        }) 
+                    }
                 </tbody>
             </table>
         </Container>

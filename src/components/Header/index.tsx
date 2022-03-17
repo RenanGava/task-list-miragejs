@@ -1,6 +1,11 @@
 import { Container, Content } from "./styles";
 
-export function Header() {
+interface HeaderProps{
+    openModal: () => void
+}
+
+export function Header({openModal}: HeaderProps) {
+
     return(
         <Container>
             <Content>
@@ -8,7 +13,9 @@ export function Header() {
                     <span>Task</span>
                     <span>List</span>
                 </h1>
-                <button>
+                <button 
+                    onClick={openModal}
+                >
                     Nova Task
                 </button>
             </Content>
