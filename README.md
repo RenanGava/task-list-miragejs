@@ -7,7 +7,7 @@
 
 # Psiga os passos abaixo para utilizar o Projeto.
 
-Para ter o projeto na sau maquina utilize o comando \
+Para ter o projeto na suu maquina utilize o comando \
 `https://github.com/RenanGava/task-list-miragejs.git`
 
 Projeto criado para fins de estuto utilizando conceitos do 
